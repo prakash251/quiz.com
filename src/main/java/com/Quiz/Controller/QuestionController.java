@@ -3,12 +3,10 @@ package com.Quiz.Controller;
 
 import com.Quiz.Dao.Question;
 import com.Quiz.Service.QuestionService;
+import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -29,7 +27,18 @@ public class QuestionController {
     @PostMapping("addq")
     public ResponseEntity<String> addQuestions()
     {
-        return  questionService.addQuetions();
+        return  questionService.addQuestions();
     }
 
+    @DeleteMapping("delete/{id}")
+   public ResponseEntity<String> deleteQuestionByid(@PathVariable int  id)
+   {
+       return  questionService.deleQuestion(id);
+   }
+
+   @DeleteMapping("deleteall")
+   public ResponseEntity<String> deleteAllQuestions()
+   {
+       return questionService.deleteAllQuestions();
+   }
 }

@@ -1,6 +1,7 @@
 package com.Quiz.Controller;
 
 
+import com.Quiz.Dao.Question;
 import com.Quiz.Service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -9,17 +10,19 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
-@RequestMapping("quetions")
+@RequestMapping("questions")
 public class QuestionController {
 
    @Autowired
     QuestionService questionService;
 
     @GetMapping("getq")
-    public String getquestions()
+    public ResponseEntity<List<Question>> getquestions()
     {
-        return "hwy here i am sending data just catch it !!!!!";
+        return questionService.getQuestions();
     }
 
 

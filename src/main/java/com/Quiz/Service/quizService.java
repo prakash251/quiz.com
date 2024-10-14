@@ -3,6 +3,7 @@ package com.Quiz.Service;
 import com.Quiz.Dao.Question;
 import com.Quiz.Dao.QuestionWrapper;
 import com.Quiz.Dao.Quiz;
+import com.Quiz.Dao.Response;
 import com.Quiz.Repo.QuestionRepo;
 import com.Quiz.Repo.QuizRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,5 +52,23 @@ public class quizService {
 
         return new ResponseEntity<>(questionsFroUser,HttpStatus.OK);
 
+    }
+
+    public ResponseEntity<Integer> submitQuiz(Integer id, List<Response> response) {
+          Quiz qz=quizRepo.findById(id).get();
+
+        List<Question> questionsa  =qz.getQuestions();
+        Integer right=0;
+        int i=0;
+        for(Response res:response)
+        {
+            if (res.getResponse().equals(questionsa.get(i).getCorrectAnswer())){
+                right++;
+            }
+
+            i++;
+        }
+
+        return new ResponseEntity<>(right,HttpStatus.OK);
     }
 }

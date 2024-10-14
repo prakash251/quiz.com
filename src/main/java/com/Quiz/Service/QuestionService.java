@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class QuestionService {
@@ -35,5 +36,13 @@ public class QuestionService {
         questionRepo.saveAll(questions);
         return new ResponseEntity<>("addedd successfully", HttpStatus.CREATED);
     }
-}
 
+    public ResponseEntity<List<Question>> getQuestions() {
+
+     List<Question> qs=questionRepo.findAll();
+     if(qs.isEmpty())
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+     else
+         return new ResponseEntity<>(qs,HttpStatus.OK);
+    }
+}

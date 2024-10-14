@@ -1,12 +1,9 @@
 package com.Quiz.Controller;
 
-import com.Quiz.Dao.Question;
 import com.Quiz.Dao.QuestionWrapper;
-import com.Quiz.Dao.Quiz;
+import com.Quiz.Dao.Response;
 import com.Quiz.Service.quizService;
-import jakarta.persistence.GeneratedValue;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -34,5 +31,11 @@ public class QuizController {
        return quizService.getQuiz(id);
 
    }
+
+   //submitting Answers
+    @PostMapping("submit/{id}")
+    public  ResponseEntity<Integer> submitResponse(@PathVariable Integer id,@RequestBody List<Response> response){
+        return  quizService.submitQuiz(id,response);
+    }
 
 }

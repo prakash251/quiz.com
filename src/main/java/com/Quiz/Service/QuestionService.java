@@ -6,10 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.DeleteMapping;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class QuestionService {
@@ -17,8 +17,8 @@ public class QuestionService {
 
     @Autowired
     QuestionRepo questionRepo;
-    public ResponseEntity<String>   addQuetions()
-    {
+    //adding questions to database
+    public ResponseEntity<String> addQuestions() {
         List<Question> questions = new ArrayList<>();
 
         questions.add(new Question(1, "What is Java?", "Programming language", "Database", "Framework", "Operating System", "Programming language", "Easy"));
@@ -32,17 +32,40 @@ public class QuestionService {
         questions.add(new Question(9, "Which keyword is used to inherit a class in Java?", "extends", "implements", "inherits", "super", "extends", "Medium"));
         questions.add(new Question(10, "Which operator is used for concatenating two strings in Java?", "+", "-", "*", "/", "+", "Easy"));
 
-
         questionRepo.saveAll(questions);
-        return new ResponseEntity<>("addedd successfully", HttpStatus.CREATED);
+        return new ResponseEntity<>(questions.size() + " questions added successfully", HttpStatus.CREATED);
     }
+
+
+    //get questions form database
 
     public ResponseEntity<List<Question>> getQuestions() {
 
      List<Question> qs=questionRepo.findAll();
+
      if(qs.isEmpty())
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
      else
          return new ResponseEntity<>(qs,HttpStatus.OK);
+    }
+
+
+    //delete questions by id in databse
+    public ResponseEntity<String> deleQuestion(int id) {
+
+        if(questionRepo.existsById(id)){
+
+            questionRepo.deleteById(id);
+            return  new ResponseEntity<>("question with id "+id+" deleted successfully",HttpStatus.OK);
+
+        }
+        else
+            return new ResponseEntity<>(id+" not found",HttpStatus.NOT_FOUND);
+    }
+
+//deleting all questions
+    public ResponseEntity<String> deleteAllQuestions() {
+        questionRepo.deleteAll();
+        return new ResponseEntity<>("all Questions Delete Successfully",HttpStatus.OK);
     }
 }

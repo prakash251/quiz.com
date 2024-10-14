@@ -12,7 +12,7 @@ import lombok.Data;
 public class Question {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+   // @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Integer id ;
     private String quetionTitle;
     private String option1;
